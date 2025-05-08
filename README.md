@@ -57,7 +57,7 @@ Il punto forte dell'elemento tastiera interattiva è un display che permette di 
 
 Un'ulteriore tipo di interazione è data dalla possibilità di ascoltare in sottofondo la traccia audio e poter suonare contermporaneamente la tastiera interattiva proprio come se fosse uno strumento musicale con cui creare musica sovrapponendo più sorgenti sonore. 
 
-[<img src="doc/Keyboard.png" width="900" alt="Keyboard">]()
+[<img src="doc/Keyboard_1.png" width="900" alt="Keyboard">]()
 
 
 ## Tecnologia usata
