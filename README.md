@@ -6,7 +6,7 @@ Elaborato 2: Atlante tecnologico: file multimediali
 
 # Il protocollo MIDI
 Autore: Cristian Sommaiuolo  
-[Il protocollo MIDI](https://ixd-supsi.github.io/2023/esempi/mp_hands/es6/1_landmarks)
+[Il protocollo MIDI](https://xiansom.github.io/protocolloMIDI/)
 
 
 ## Introduzione e tema
@@ -21,15 +21,15 @@ Questo ha portato ad un nuovo modo di interagire con le tecnologie digitali che 
 
 Webgrafia: 
 
-https://www.thomann.de/it/onlineexpert_page_tastiere_il_midi.html
+[Thomann](https://www.thomann.de/it/onlineexpert_page_tastiere_il_midi.html)
 
-https://www.muzines.co.uk/articles/talking-midi/1274
+[Muzines](https://www.muzines.co.uk/articles/talking-midi/1274)
 
-https://www.audiosonica.com/it/corsoaudio-online/principio-di-funzionamento-il-protocollo-midi
+[Audiosonica](https://www.audiosonica.com/it/corsoaudio-online/principio-di-funzionamento-il-protocollo-midi)
 
-https://it.wikipedia.org/wiki/Musical_Instrument_Digital_Interface
+[Wikipedia](https://it.wikipedia.org/wiki/Musical_Instrument_Digital_Interface)
 
-https://www.suonoelettronico.com/interfacciamidi.html
+[Suonoelettronico](https://www.suonoelettronico.com/interfacciamidi.html)
 
 
 
