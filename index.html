@@ -377,8 +377,8 @@
 
             <!-- BUTTON PLAYER -->
 
-            <audio id="audio-player" src="Audio/Alva_Sounds.wav" preload="auto" loop></audio>
-            <button id="play-audio" style="background-color: black; border: none; padding: 10px; cursor: pointer; margin: 10px 0">
+            <audio id="audio-player" src="Audio/Alva_Sounds_mastered.wav" preload="auto" loop></audio>
+            <button id="play-audio" style="background-color: black; border: none; padding: 0px; cursor: pointer; margin: 20px 0;">
                 <svg id="play-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="white" viewBox="0 0 24 24">
                     <path d="M8 5v14l11-7z"/>
                 </svg>
@@ -762,7 +762,7 @@
                 Il segnale parte quindi dall'uscita del MASTER (OUT) per andare nell'ingresso del primo strumento SLAVE (IN). 
                 A questo punto, per inviare lo stesso segnale iniziale che contiene già le informazioni per tutti 
                 gli strumenti collegati, bisogna prelevare il segnale dall'uscita THRU del primo strumento SLAVE 
-                e inviarlo a quello successivo.</p>
+                e inviarlo alla porta IN di quello successivo.</p>
 
 
             <p>Un collegamento MIDI può trasportare sedici canali indipendenti, numerati da 1 a 16. Un dispositivo può ascoltare canali specifici 
@@ -1057,7 +1057,8 @@
         <!-- TASTIERA MUSICALE INTERATTIVA-->
 
         
-        <div class="keyboard" id="keyboard" style="margin: 0; padding: 40px 0;"></div>
+        <div class="keyboard" id="keyboard" style="margin: 0; padding: 0px 0;"></div>
+        
         <!-- I tasti verranno generati dinamicamente con JavaScript -->
 
 
@@ -1076,7 +1077,7 @@
             function drawWaveform() {
             requestAnimationFrame(drawWaveform);
             analyser.getByteTimeDomainData(dataArray);
-            canvasCtx.fillStyle = '#222';
+            canvasCtx.fillStyle = '#1a1a1a';
             canvasCtx.fillRect(0, 0, canvas.width, canvas.height);
             canvasCtx.lineWidth = 2;
             canvasCtx.strokeStyle = '#fff';
@@ -1116,7 +1117,8 @@
                 
                 const whiteKey = document.createElement('div');
                 whiteKey.className = 'white-key';
-                whiteKey.textContent = noteName + octave;
+                // whiteKey.textContent = noteName + octave;
+                whiteKey.style.fontSize = '0.8em';
                 whiteKey.dataset.note = noteName;
                 whiteKey.dataset.octave = octave;
                 whiteKey.dataset.midi = midiNumber;
@@ -1164,7 +1166,8 @@
                 
                 const blackKeyElement = document.createElement('div');
                 blackKeyElement.className = 'black-key';
-                blackKeyElement.textContent = noteName + octave;
+                // blackKeyElement.textContent = noteName + octave;
+                blackKeyElement.style.fontSize = '0.8em';
                 blackKeyElement.dataset.note = noteName;
                 blackKeyElement.dataset.octave = octave;
                 blackKeyElement.dataset.midi = midiNumber;
@@ -1223,7 +1226,7 @@
             oscillator.type = 'sine';
             oscillator.frequency.value = frequency;
             
-            gainNode.gain.value = velocity / 2000;
+            gainNode.gain.value = velocity / 500;
             
             oscillator.connect(gainNode);
             gainNode.connect(analyser);
@@ -1255,30 +1258,38 @@
             }
 
             const keyMap = {
-            'a': { note: 'C', octave: 3 },
-            'w': { note: 'C#', octave: 3 },
-            's': { note: 'D', octave: 3 },
-            'e': { note: 'D#', octave: 3 },
-            'd': { note: 'E', octave: 3 },
-            'f': { note: 'F', octave: 3 },
-            't': { note: 'F#', octave: 3 },
-            'g': { note: 'G', octave: 3 },
-            'y': { note: 'G#', octave: 3 },
-            'h': { note: 'A', octave: 3 },
-            'u': { note: 'A#', octave: 3 },
-            'j': { note: 'B', octave: 3 },
-            'k': { note: 'C', octave: 4 },
-            'o': { note: 'C#', octave: 4 },
-            'l': { note: 'D', octave: 4 },
-            'p': { note: 'D#', octave: 4 },
-            'ò': { note: 'E', octave: 4 },
-            'z': { note: 'F', octave: 4 },
-            'x': { note: 'C', octave: 5 },
-            'c': { note: 'C#', octave: 5 },
-            'v': { note: 'D', octave: 5 },
-            'b': { note: 'D#', octave: 5 },
-            'n': { note: 'E', octave: 5 },
-            'm': { note: 'F', octave: 5 }
+            'q': { note: 'C', octave: 3 },
+            '2': { note: 'C#', octave: 3 },
+            'w': { note: 'D', octave: 3 },
+            '3': { note: 'D#', octave: 3 },
+            'e': { note: 'E', octave: 3 },
+            'r': { note: 'F', octave: 3 },
+            '5': { note: 'F#', octave: 3 },
+            't': { note: 'G', octave: 3 },
+            '6': { note: 'G#', octave: 3 },
+            'y': { note: 'A', octave: 3 },
+            '7': { note: 'A#', octave: 3 },
+            'u': { note: 'B', octave: 3 },
+            'i': { note: 'C', octave: 4 },
+            'z': { note: 'C', octave: 4 },
+            's': { note: 'C#', octave: 4 },
+            'x': { note: 'D', octave: 4 },
+            'd': { note: 'D#', octave: 4 },
+            'c': { note: 'E', octave: 4 },
+            'v': { note: 'F', octave: 4 },
+            'g': { note: 'F#', octave: 4 },
+            'b': { note: 'G', octave: 4 },
+            'h': { note: 'G#', octave: 4 },
+            'n': { note: 'A', octave: 4 },
+            'j': { note: 'A#', octave: 4 },
+            'm': { note: 'B', octave: 4 },
+            'k': { note: 'C', octave: 5 },
+            // '': { note: 'C', octave: 5 },
+            // 'c': { note: 'C#', octave: 5 },
+            // 'v': { note: 'D', octave: 5 },
+            // 'b': { note: 'D#', octave: 5 },
+            // 'n': { note: 'E', octave: 5 },
+            // 'm': { note: 'F', octave: 5 }
             };
 
             document.addEventListener('keydown', function(event) {
@@ -1314,13 +1325,13 @@
         <canvas id="lissajous-display" width="600" height="600" style="background-color: #1a1a1a; margin: 0px auto; border: 1px solid #444;"></canvas>
     
 
-        <hr style="border: 0; height: 1px; background-color: white; margin: 0px 0;" />
+        <hr style="border: 0; height: 1px; background-color: white; margin: 30px 0;" />
     </section>
 
     <footer>
 
-        <p style="text-align: center; color: #ffffff;">&copy; <span id="current-year"></span> MIDI Tutorial. Tutti i diritti riservati.</p>
-        <p style="text-align: center; color: #ffffff;"><small>Realizzato da Cristian Sommaiuolo</small></p>
+        <p style="text-align: center; color: #707070; font-size: 0.8em;">&copy; <span id="current-year"></span> MIDI Tutorial. Tutti i diritti riservati.</p>
+        <p style="text-align: center; color: #707070; font-size: 0.8em;"><small>Realizzato da Cristian Sommaiuolo</small></p>
       
     </footer>
 
