@@ -1,0 +1,11 @@
+/* .master_slave {
+            
+            margin-left: 0;
+            margin-right: 15px;  Spazio tra l'immagine e il testo 
+            margin-bottom: 15px; Spazio sotto l'immagine */
+            max-width: 50%; /* Mantiene la dimensione originale */
+            height: 50%; /* Mantiene le proporzioni */
+            float: none; /* Opzionale: per far fluire il testo attorno */
+            clear: both; /* Opzionale: evita sovrapposizioni */
+
+        } */

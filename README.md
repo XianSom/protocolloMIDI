@@ -21,7 +21,7 @@ Questo ha portato ad un nuovo modo di interagire con le tecnologie digitali che 
 
 Webgrafia: 
 
-[onlineexpert_page_tastiere_il_midi](https://www.thomann.de/it/onlineexpert_page_tastiere_il_midi.html)
+https://www.thomann.de/it/onlineexpert_page_tastiere_il_midi.html
 
 https://www.muzines.co.uk/articles/talking-midi/1274
 

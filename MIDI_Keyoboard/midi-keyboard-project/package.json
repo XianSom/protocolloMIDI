@@ -1,0 +1,14 @@
+{
+  "name": "midi-keyboard-project",
+  "version": "1.0.0",
+  "description": "A project that includes an interactive MIDI keyboard displaying MIDI parameters for selected notes.",
+  "main": "src/index.html",
+  "scripts": {
+    "start": "live-server src"
+  },
+  "dependencies": {
+    "live-server": "^1.2.1"
+  },
+  "author": "Your Name",
+  "license": "MIT"
+}

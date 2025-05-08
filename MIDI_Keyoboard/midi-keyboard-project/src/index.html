@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tastiera Musicale Interattiva</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: #f5f5f5;
+            padding: 20px;
+        }
+        
+        h1 {
+            color: #333;
+            margin-bottom: 30px;
+        }
+        
+        .keyboard {
+            display: flex;
+            position: relative;
+            margin-bottom: 30px;
+        }
+        
+        .white-key {
+            width: 50px;
+            height: 200px;
+            background-color: white;
+            border: 1px solid #ccc;
+            border-radius: 0 0 5px 5px;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            padding-bottom: 10px;
+            box-sizing: border-box;
+            user-select: none;
+            z-index: 1;
+        }
+        
+        .white-key.active {
+            background-color: #e0e0e0;
+        }
+        
+        .black-key {
+            width: 30px;
+            height: 120px;
+            background-color: black;
+            border-radius: 0 0 5px 5px;
+            position: absolute;
+            cursor: pointer;
+            z-index: 2;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            padding-bottom: 10px;
+            box-sizing: border-box;
+            user-select: none;
+        }
+        
+        .black-key.active {
+            background-color: #333;
+        }
+        
+        .info-panel {
+            width: 80%;
+            max-width: 600px;
+            background-color: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .info-title {
+            font-size: 1.2em;
+            margin-bottom: 15px;
+            color: #444;
+        }
+        
+        .info-content {
+            font-family: monospace;
+            background-color: #f9f9f9;
+            padding: 15px;
+            border-radius: 5px;
+            min-height: 100px;
+        }
+        
+        .note-name {
+            font-size: 1.5em;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        
+        .midi-params {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+        
+        .param {
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .param-name {
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>Tastiera Musicale Interattiva (2 Ottave)</h1>
+    
+    <div class="keyboard" id="keyboard">
+        <!-- I tasti verranno generati dinamicamente con JavaScript -->
+    </div>
+    
+    <div class="info-panel">
+        <div class="info-title">Informazioni MIDI</div>
+        <div class="info-content" id="midi-info">
+            <div class="note-name">Clicca un tasto per vedere i parametri MIDI</div>
+            <div class="midi-params">
+                <div class="param"><span class="param-name">Nota:</span> <span id="note">-</span></div>
+                <div class="param"><span class="param-name">Numero MIDI:</span> <span id="midi-number">-</span></div>
+                <div class="param"><span class="param-name">Frequenza (Hz):</span> <span id="frequency">-</span></div>
+                <div class="param"><span class="param-name">Ottava:</span> <span id="octave">-</span></div>
+                <div class="param"><span class="param-name">Velocity:</span> <span id="velocity">-</span></div>
+                <div class="param"><span class="param-name">Channel:</span> <span id="channel">-</span></div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const keyboard = document.getElementById('keyboard');
+            const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            let oscillators = {};
+            
+            // Note della scala cromatica
+            const notes = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
+            
+            // Creazione della tastiera (2 ottave, da C3 a B4)
+            const startOctave = 3;
+            const endOctave = 4;
+            const startNote = 0; // C
+            const endNote = 11; // B
+            
+            // Posizioni dei tasti neri (relativi alla tastiera)
+            const blackKeyPositions = [1, 3, 6, 8, 10];
+            
+            // Creazione dei tasti bianchi
+            for (let octave = startOctave; octave <= endOctave; octave++) {
+                for (let i = (octave === startOctave ? startNote : 0); 
+                     i <= (octave === endOctave ? endNote : 11); i++) {
+                    
+                    // Salta i tasti neri (li aggiungeremo dopo)
+                    if (blackKeyPositions.includes(i % 12)) continue;
+                    
+                    const noteName = notes[i];
+                    const midiNumber = 12 * (octave + 1) + i;
+                    const frequency = 440 * Math.pow(2, (midiNumber - 69) / 12);
+                    
+                    const whiteKey = document.createElement('div');
+                    whiteKey.className = 'white-key';
+                    whiteKey.textContent = noteName + octave;
+                    whiteKey.dataset.note = noteName;
+                    whiteKey.dataset.octave = octave;
+                    whiteKey.dataset.midi = midiNumber;
+                    whiteKey.dataset.frequency = frequency.toFixed(2);
+                    
+                    whiteKey.addEventListener('mousedown', () => playNote(whiteKey, 127));
+                    whiteKey.addEventListener('mouseup', () => stopNote(whiteKey));
+                    whiteKey.addEventListener('mouseleave', () => stopNote(whiteKey));
+                    
+                    keyboard.appendChild(whiteKey);
+                }
+            }
+            
+            // Creazione dei tasti neri
+            for (let octave = startOctave; octave <= endOctave; octave++) {
+                for (let i of blackKeyPositions) {
+                    // Assicuriamoci di essere nell'intervallo corretto per ogni ottava
+                    if (octave === startOctave && i < startNote) continue;
+                    if (octave === endOctave && i > endNote) continue;
+                    
+                    const noteName = notes[i];
+                    const midiNumber = 12 * (octave + 1) + i;
+                    const frequency = 440 * Math.pow(2, (midiNumber - 69) / 12);
+                    
+                    const blackKey = document.createElement('div');
+                    blackKey.className = 'black-key';
+                    blackKey.textContent = noteName + octave;
+                    blackKey.dataset.note = noteName;
+                    blackKey.dataset.octave = octave;
+                    blackKey.dataset.midi = midiNumber;
+                    blackKey.dataset.frequency = frequency.toFixed(2);
+                    
+                    // Posizionamento del tasto nero
+                    // Calcoliamo la posizione in base alla posizione nella scala cromatica
+                    let whiteKeyIndex = 0;
+                    for (let j = (octave === startOctave ? startNote : 0); 
+                         j <= (octave === endOctave ? endNote : 11); j++) {
+                        if (blackKeyPositions.includes(j % 12)) continue;
+                        if (j === i - 1) break;
+                        whiteKeyIndex++;
+                    }
+                    
+                    blackKey.style.left = `${(whiteKeyIndex * 50) + 35}px`;
+                    
+                    blackKey.addEventListener('mousedown', () => playNote(blackKey, 127));
+                    blackKey.addEventListener('mouseup', () => stopNote(blackKey));
+                    blackKey.addEventListener('mouseleave', () => stopNote(blackKey));
+                    
+                    keyboard.appendChild(blackKey);
+                }
+            }
+            
+            // Funzione per suonare una nota
+            function playNote(keyElement, velocity) {
+                const midiNumber = parseInt(keyElement.dataset.midi);
+                const frequency = parseFloat(keyElement.dataset.frequency);
+                const noteName = keyElement.dataset.note;
+                const octave = keyElement.dataset.octave;
+                
+                // Aggiorna il pannello delle informazioni
+                document.getElementById('note').textContent = noteName + octave;
+                document.getElementById('midi-number').textContent = midiNumber;
+                document.getElementById('frequency').textContent = frequency + ' Hz';
+                document.getElementById('octave').textContent = octave;
+                document.getElementById('velocity').textContent = velocity;
+                document.getElementById('channel').textContent = 1; // Canale MIDI 1
+                
+                // Evidenzia il tasto premuto
+                keyElement.classList.add('active');
+                
+                // Crea e avvia l'oscillatore
+                const oscillator = audioContext.createOscillator();
+                const gainNode = audioContext.createGain();
+                
+                oscillator.type = 'sine';
+                oscillator.frequency.value = frequency;
+                
+                gainNode.gain.value = velocity / 127;
+                
+                oscillator.connect(gainNode);
+                gainNode.connect(audioContext.destination);
+                
+                oscillator.start();
+                
+                oscillators[midiNumber] = { oscillator, gainNode };
+            }
+            
+            // Funzione per fermare una nota
+            function stopNote(keyElement) {
+                const midiNumber = parseInt(keyElement.dataset.midi);
+                
+                // Rimuovi l'evidenziazione
+                keyElement.classList.remove('active');
+                
+                // Ferma l'oscillatore se esiste
+                if (oscillators[midiNumber]) {
+                    oscillators[midiNumber].gainNode.gain.setValueAtTime(
+                        oscillators[midiNumber].gainNode.gain.value,
+                        audioContext.currentTime
+                    );
+                    oscillators[midiNumber].gainNode.gain.exponentialRampToValueAtTime(
+                        0.001,
+                        audioContext.currentTime + 0.03
+                    );
+                    
+                    oscillators[midiNumber].oscillator.stop(audioContext.currentTime + 0.03);
+                    delete oscillators[midiNumber];
+                }
+            }
+            
+            // Aggiungi supporto per la tastiera del computer
+            document.addEventListener('keydown', function(e) {
+                // Mappatura dei tasti della tastiera alle note (stile piano roll)
+                const keyMap = {
+                    'a': 'C3', 'w': 'C#3', 's': 'D3', 'e': 'D#3', 'd': 'E3',
+                    'f': 'F3', 't': 'F#3', 'g': 'G3', 'y': 'G#3', 'h': 'A3',
+                    'u': 'A#3', 'j': 'B3', 'k': 'C4', 'o': 'C#4', 'l': 'D4',
+                    'p': 'D#4', ';': 'E4', "'": 'F4', ']': 'F#4', '\\': 'G4'
+                };
+                
+                if (keyMap[e.key]) {
+                    const note = keyMap[e.key];
+                    const keyElement = document.querySelector(`[data-note="${note.substring(0, note.length-1)}"][data-octave="${note.substring(note.length-1)}"]`);
+                    if (keyElement && !keyElement.classList.contains('active')) {
+                        playNote(keyElement, 100);
+                    }
+                }
+            });
+            
+            document.addEventListener('keyup', function(e) {
+                const keyMap = {
+                    'a': 'C3', 'w': 'C#3', 's': 'D3', 'e': 'D#3', 'd': 'E3',
+                    'f': 'F3', 't': 'F#3', 'g': 'G3', 'y': 'G#3', 'h': 'A3',
+                    'u': 'A#3', 'j': 'B3', 'k': 'C4', 'o': 'C#4', 'l': 'D4',
+                    'p': 'D#4', ';': 'E4', "'": 'F4', ']': 'F#4', '\\': 'G4'
+                };
+                
+                if (keyMap[e.key]) {
+                    const note = keyMap[e.key];
+                    const keyElement = document.querySelector(`[data-note="${note.substring(0, note.length-1)}"][data-octave="${note.substring(note.length-1)}"]`);
+                    if (keyElement) {
+                        stopNote(keyElement);
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>

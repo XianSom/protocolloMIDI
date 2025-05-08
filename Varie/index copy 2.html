@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Musical Instrument Digital Interface</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            color: #ffffff; /* Testo bianco */
+            background-color: #000000; /* Sfondo nero */
+            text-align: justify;
+        }
+        h1, h2, h3 {
+            color: #ffffff;
+        }
+
+        p {
+            hyphens: auto;        }
+
+        h1 {
+            border-bottom: 2px solid #ffffff; 
+            padding-bottom: 10px;
+        }
+        h2 {
+            margin-top: 30px;
+            border-left: 4px solid #ffffff;
+            padding-left: 10px;
+            color: #ffffff; 
+        }
+        blockquote {
+            background-color: #1a1a1a; /* Grigio molto scuro */
+            border-left: 5px solid #ffffff;
+            margin: 20px 0;
+            padding: 15px;
+            font-style: italic;
+            color: #e0e0e0; /* Grigio chiaro per leggibilità */
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 20px auto;
+            border: 1px solid #333;
+            /*box-shadow: 0 0 15px rgba(74, 144, 226, 0.3); /* Ombra blu */
+        }
+        .content-container {
+            max-width: 450px; /* Metà della larghezza originale (900px) */
+            margin: 0 0; /* Centra il contenuto */
+        }
+        section {
+            margin-bottom: 40px; /* Aggiunge spazio tra le sezioni */
+        }
+
+
+
+
+        .connector-diagram {
+            display: flex;
+            justify-content: space-around;
+            /* flex-wrap: wrap; */
+            margin: 30px 0;
+        }
+        .connector-box {
+            border: 1px solid #ffffff;
+            border-radius: 5px;
+            padding: 15px;
+            margin: 10px;
+            width: 50%; /* Era 200px nel tuo codice originale */
+            min-width: 150px; /* Larghezza minima per mobile */
+            /* Mantieni tutte le altre proprietà esistenti */
+            box-sizing: border-box; /* Importante: include padding nel calcolo della width */
+            
+            text-align: justify;
+            background-color: #1a1a1a;
+        }
+        .connector-box h3 {
+            margin-top: 0;
+            color: #ffffff;
+        }
+        .drum-map {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            margin: 20px 0;
+        }
+        .drum-item {
+            border: 1px solid #333;
+            padding: 8px;
+            font-size: 0.9em;
+            background-color: #1a1a1a;
+        }
+        .home_studio {
+            display: block; /* o inline-block a seconda delle esigenze */
+            margin-left: 0; /* Rimuove il margine sinistro automatico */
+            margin-right: auto; /* Mantiene margine destro automatico */
+            float: none; /* Opzionale: per far fluire il testo attorno */
+            clear: both; /* Opzionale: evita sovrapposizioni */
+        }
+        
+        .porte_midi {
+            display: block; /* o inline-block a seconda delle esigenze */
+            margin-left: auto; /* Rimuove il margine sinistro automatico */
+            margin-right: auto; /* Mantiene margine destro automatico */
+            float: none; /* Opzionale: per far fluire il testo attorno */
+            clear: both; /* Opzionale: evita sovrapposizioni */
+        }
+        .midi-logo {
+            display: block; /* o inline-block a seconda delle esigenze */
+            margin-left: 0; /* Rimuove il margine sinistro automatico */
+            margin-right: auto; /* Mantiene margine destro automatico */
+            float: none; /* Opzionale: per far fluire il testo attorno */
+            clear: both; /* Opzionale: evita sovrapposizioni */
+        }
+        .note-number {
+            font-weight: bold;
+            color: #ffffff;
+        }
+
+        .image-container {
+            display: flex;
+            justify-content: space-between; 
+            gap: 20px;
+        }
+
+        @media (max-width: 768px) {
+
+            .image-container {
+                display: block;
+            } 
+        }
+
+
+        .image-container div {
+            flex: 1; /* Ogni immagine occupa lo stesso spazio */
+            text-align: justify; 
+        }
+        .image-container img {
+            max-width: 100%; /* Mantiene le proporzioni */
+            height: auto;
+        }
+        .timeline {
+            background-color: #1a1a1a;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0;
+            border-left: 3px solid #ffffff;
+        }
+        .timeline-item {
+            margin-bottom: 10px;
+            padding-left: 20px;
+            position: relative;
+        }
+        .timeline-item:before {
+            content: "•";
+            color: #ffffff;
+            font-size: 1.5em;
+            position: absolute;
+            left: 0;
+            top: -5px;
+        }
+        .synthesizers {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            margin: 30px 0;
+        }
+        .synth {
+            text-align: center;
+            margin: 15px;
+            width: 250px;
+        }
+        .synth img {
+            max-height: 150px;
+            background-color: #1a1a1a;
+        }
+        .synth-caption {
+            font-style: italic;
+            margin-top: 10px;
+            color: #b0b0b0;
+            font-size: 0.8em;
+            text-align: justify;
+        }
+        a {
+            color: #ffffff;
+            text-decoration: none;
+        }
+        a:hover {
+            color: #b0b0b0;
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <img 
+    src="images/Midi_Logo.jpg" 
+    alt="Logo MIDI - Musical Instrument Digital Interface" 
+    width="450" 
+     
+    class="midi-logo"
+    loading="lazy"
+    >
+
+    <h3>MUSICAL  INSTRUMENT  DIGITAL  INTERFACE</h3>
+
+    <img 
+    src="images/Home_Studio.webp" 
+    alt="Home Studio - Immagine" 
+    width="900" 
+    height="400" 
+    class="home_studio"
+    loading="lazy"
+    >
+
+
+    
+
+    <section id="what-is-midi">
+        <h2>COS'È IL PROTOCOLLO MIDI?</h2>
+        <div class="content-container">
+            <p>Il MIDI (Musical Instrument Digital Interface) è un protocollo che consente agli strumenti 
+            musicali elettronici, ai computer e ad altri dispositivi di comunicare tra loro. 
+            Il MIDI è usato in studi di registrazione, esibizioni dal vivo e nella produzione musicale digitale.</p>
+            <p>Un MIDI File è una sequenza di dati MIDI costituiti da diversi messaggi distribuiti 
+            nei vari canali in grado di essere interpretata da qualsiasi strumento dotato di porte MIDI. 
+            Lo standard MIDI File (SMF) è stato realizzato nel 1986 da Opcode System; 
+            ha come estensione .mid ed è un file di testo codificato ASCII, e pertanto occupa poco spazio.</p>
+        </div>
+    </section>
+
+    <section id="history">
+        <h2>COME È NATO IL MIDI?</h2>
+        <div class="content-container">
+            <p>Il MIDI (Musical Instrument Digital Interface) è un sistema che permette a strumenti musicali elettronici 
+                e computer di comunicare tra loro. Prima della sua nascita, ogni produttore usava sistemi diversi, 
+                rendendo difficile collegare strumenti di marche differenti.</p>
+        </div>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <strong>1982:</strong> Roland e Sequential Circuits collaborano per creare un linguaggio comune
+                </div>
+                <div class="timeline-item">
+                <strong>1983:</strong> Vengono fondate MIDI Manufacturers Association (MMA) e Japanese MIDI Standard Committee (JMSC)
+            </div>
+                <div class="timeline-item">
+                <strong>1983:</strong> Primo collegamento MIDI tra un sintetizzatore Roland "Jupiter 6" e il "Six Trak" della Sequential Circuits
+                </div>
+            
+        </div>
+
+        <div class="synthesizers">
+            <div class="synth">
+                <img src="images/Jupiter_Six.jpg" alt="Sintetizzatore Jupiter 6 e Six Trak">
+                <div class="synth-caption">Il sintetizzatore Jupiter 6 e il Six Trak comunicano 
+                    per la prima volta attraverso il protocollo MIDI al Winter NAMM show nel 1983</div>
+            </div>
+            <div class="synth">
+                <img src="images/Roland_Jupiter6.jpg" alt="Sintetizzatore Jupiter 6 della Roland">
+                <div class="synth-caption">Sintetizzatore Jupiter 6 della Roland</div>
+            </div>
+            <div class="synth">
+                <img src="images/sequential-circuits-neu-7.jpg">
+                <div class="synth-caption">Sintetizzatore Six Trak della Sequential Circuits</div>
+            </div>
+        </div>
+        <div class="content-container">
+            <p>Grazie al MIDI, è diventato possibile collegare strumenti musicali elettronici 
+            a computer e ad altri dispositivi, permettendo di creare musica in modo 
+            più versatile ed efficiente. Questo avveniva proprio mentre le tastiere diventavano 
+            digitali e i primi software musicali iniziavano a diffondersi.</p>
+        </div>
+    </section>
+
+    <section id="how-it-works">
+        <h2>COME FUNZIONA?</h2>
+        <div class="content-container">
+            <p>Il protocollo MIDI non trasmette suoni, ma solo dati di controllo come note, 
+            velocità e altre informazioni. A differenza del segnale audio tradizionale, 
+            cioè quello analogico, il segnale midi è un segnale digitale, contiene cioè 
+            informazioni codificate in codice binario per poter essere elaborate e interpretate 
+            dai processori.</p>
+        </div>
+        <p>I dispositivi MIDI inviano e ricevono dati sotto forma di messaggi, 
+            che possono essere di diversi tipi:</p>
+        
+        <blockquote>
+            <p><strong>Note On / Note Off</strong> → Avvia e interrompe una nota.</p>
+            <p><strong>Control Change (CC)</strong> → Modifica parametri come volume, riverbero, o modulazione.</p>
+            <p><strong>Program Change</strong> → Cambia il suono o il preset di uno strumento.</p>
+            <p><strong>Pitch Bend</strong> → Variazione dell'intonazione di una nota.</p>
+        </blockquote>
+        
+
+        <div class="content-container">
+    
+            <p>Un messaggio MIDI quindi può utilizzare mille volte meno spazio su disco rispetto
+                 all'audio registrato equivalente. A causa delle loro piccole dimensioni, 
+                gli arrangiamenti MIDI realizzati dai fan sono diventati un modo attraente 
+                per condividere musica online, prima dell'avvento dell'accesso a Internet 
+                a banda larga e dei dischi rigidi multi-gigabyte.</p>
+             
+        
+            <p>Il principale svantaggio di questo è l'ampia variazione nella qualità delle schede
+                 audio degli utenti e nell'audio effettivo contenuto come campioni o suono sintetizzato 
+                nella scheda a cui i dati MIDI si riferiscono solo simbolicamente.</p>
+        </div>
+
+    </section>
+
+    <section id="connectors">
+        <h2>CHE TIPO DI CONNETTORI SI USANO NEL MIDI?</h2>
+
+    <div class="content-container">
+        <p>Esistono tre principali porte MIDI:</p>
+    </div>
+        
+        <div class="connector-diagram">
+            <div class="connector-box">
+                <h3>MIDI IN</h3>
+                <p>Riceve i dati MIDI</p>
+                <img src="images/Midi_In.png" alt="Porte Midi In" width="50" height="50">
+            </div>
+            <div class="connector-box">
+                <h3>MIDI OUT</h3>
+                <p>Invia dati MIDI</p>
+                <img src="images/Midi_In.png" alt="Porte Midi In" width="50" height="50">
+            </div>
+            <div class="connector-box">
+                <h3>MIDI THRU</h3>
+                <p>Duplica il segnale in ingresso per inviarlo a un altro dispositivo</p>
+                <img src="images/Midi_In.png" alt="Porte Midi In" width="50" height="50">
+            </div>
+        </div>
+
+    
+        
+        <div class="content-container">
+            <p>Lo strumento che genera il segnale midi è detto MASTER mentre tutti quelli che lo ricevono sono detti SLAVE. 
+                Il segnale parte quindi dall'uscita del MASTER (OUT) per andare nell'ingresso del primo strumento SLAVE (IN). 
+                A questo punto, per inviare lo stesso segnale iniziale che contiene già le informazioni per tutti 
+                gli strumenti collegati, bisogna prelevare il segnale dall'uscita THRU del primo strumento SLAVE 
+                e inviarlo a quello successivo.</p>
+        </div>
+
+
+        <div class="image-container">
+            <div>
+                <img src="images/Master_Midi.png" alt="Schema di collegamento MIDI">
+                <div class="synth-caption">Collegamento MIDI a partire da un sintetizzatore usato come strumento MASTER
+                    e due altri sintetizzatori che ricevono i segnali di controllo per poi riprodurre le diverse note 
+                    richieste nel messaggio della MASTER KEYBOARD.
+                </div>
+            </div>
+            <div>
+                <img src="images/Bluetooth_MIDI.jpg" alt="Schema di collegamento Bluetooth_MIDI">
+                <div class="synth-caption">Collegamento MIDI a partire da un computer usato come strumento MASTER e un sintetizzatore che riceve i segnali 
+                    di controllo per poi riprodurre le diverse note richieste nel messaggio dal computer che in questo caso assume 
+                    il ruolo di MASTER KEYBOARD.
+                </div>
+            </div>
+        </div>
+        
+        
+        
+
+    </section>
+
+    <section id="messages">
+        <h2>COMPOSIZIONE DEI MESSAGGI MIDI</h2>
+
+        <div class="image-container">
+            <div class="content-container">
+                <p>I messaggi MIDI sono composti da byte a 8 bit trasmessi utilizzando la comunicazione seriale asincrona. 
+                    Il primo bit di ogni byte identifica se il byte è un byte di stato o un byte di dati, ed è seguito da sette bit di informazioni.</p>
+            
+                <p>Un collegamento MIDI può trasportare sedici canali indipendenti, numerati da 1 a 16. Un dispositivo può ascoltare canali specifici 
+                    e ignorare i messaggi su altri canali (modalità omni off), oppure può ascoltare tutti i canali, ignorando di fatto l'indirizzo del canale (omni on).</p>
+            
+                <p>Un dispositivo polifonico può suonare più note contemporaneamente, finché non viene raggiunto il limite di polifonia del dispositivo, 
+                    o le note raggiungono la fine del loro envelope di decadimento, o vengono ricevuti comandi MIDI espliciti di note-off. 
+                    Un dispositivo monofonico invece termina qualsiasi nota precedente quando arrivano nuovi comandi di note-on.</p>
+            
+                <p>Un messaggio MIDI è un'istruzione che controlla alcuni aspetti del dispositivo ricevente. Un messaggio MIDI è costituito da un byte di stato, 
+                    che indica il tipo di messaggio, seguito da un massimo di due byte di dati che contengono i parametri.</p>
+            </div>
+    
+            <div>
+                <img src="images/16_CANALI_MIDI.jpg" alt="Descrizione dell'immagine" width="250">
+            </div>
+        </div>
+
+        
+
+
+    </section>
+
+    <section id="general-midi">
+        <h2>IL GENERAL MIDI</h2>
+
+    <div class="content-container">
+        <p>MIDI consente la selezione dei suoni di uno strumento tramite messaggi di cambio programma, ma non vi è alcuna garanzia che due strumenti abbiano lo stesso suono in una determinata posizione del programma. Il programma n. 0 può essere un pianoforte su uno strumento o un flauto su un altro.</p>
+        
+        <p>Lo standard General MIDI (GM) è stato stabilito nel 1991 e fornisce una banca di suoni standardizzata che consente a un file MIDI standard creato su un dispositivo di suonare in modo simile quando viene riprodotto su un altro. GM specifica una banca di 128 suoni organizzati in 16 famiglie di otto strumenti correlati e assegna un numero di programma specifico a ogni strumento.</p>
+        
+        <p>Gli strumenti a percussione sono posizionati sul canale 10 e un valore di nota MIDI specifico è mappato a ogni suono di percussione.</p>
+    </div>
+
+
+        <h3>Percussion Key Map di General MIDI</h3>
+        <div class="drum-map">
+            <div class="drum-item"><span class="note-number">35</span> Acoustic Bass Drum</div>
+            <div class="drum-item"><span class="note-number">36</span> Electric Bass Drum</div>
+            <div class="drum-item"><span class="note-number">38</span> Acoustic Snare</div>
+            <div class="drum-item"><span class="note-number">40</span> Electric Snare</div>
+            <div class="drum-item"><span class="note-number">41</span> Low Floor Tom</div>
+            <div class="drum-item"><span class="note-number">43</span> High Floor Tom</div>
+            <div class="drum-item"><span class="note-number">45</span> Low Tom</div>
+            <div class="drum-item"><span class="note-number">47</span> Low-Mid Tom</div>
+            <div class="drum-item"><span class="note-number">48</span> Hi-Mid Tom</div>
+            <div class="drum-item"><span class="note-number">50</span> High Tom</div>
+            <div class="drum-item"><span class="note-number">52</span> Chinese Cymbal</div>
+            <div class="drum-item"><span class="note-number">53</span> Ride Bell</div>
+            <div class="drum-item"><span class="note-number">55</span> Splash Cymbal</div>
+            <div class="drum-item"><span class="note-number">57</span> Crash Cymbal 2</div>
+            <div class="drum-item"><span class="note-number">59</span> Ride Cymbal 2</div>
+            <div class="drum-item"><span class="note-number">60</span> HI Bongo</div>
+            <div class="drum-item"><span class="note-number">62</span> Mute Hi Conga</div>
+            <div class="drum-item"><span class="note-number">64</span> Low Conga</div>
+            <div class="drum-item"><span class="note-number">65</span> High Timbale</div>
+            <div class="drum-item"><span class="note-number">67</span> High Agogo</div>
+            <div class="drum-item"><span class="note-number">69</span> Cabasa</div>
+            <div class="drum-item"><span class="note-number">71</span> Short Whistle</div>
+            <div class="drum-item"><span class="note-number">72</span> Long Whistle</div>
+            <div class="drum-item"><span class="note-number">74</span> Long Guiro</div>
+            <div class="drum-item"><span class="note-number">76</span> Hi Wood Block</div>
+            <div class="drum-item"><span class="note-number">77</span> Low Wood Block</div>
+            <div class="drum-item"><span class="note-number">79</span> Open Cuica</div>
+            <div class="drum-item"><span class="note-number">81</span> Open Triangle</div>
+        </div>
+        <div class="content-container">
+        <p>Lo standard GM elimina la variazione nella mappatura delle note. Alcuni produttori non erano d'accordo 
+            su quale numero di nota dovesse rappresentare il Do centrale, ma GM specifica che la nota numero 69 
+            riproduce A440, che a sua volta fissa il Do centrale come nota numero 60.</p>
+        
+        <p>I dispositivi conformi a GM devono offrire una polifonia a 24 note. I dispositivi compatibili con GM 
+            devono rispondere a velocità, affertocchi e pitch bend, devono essere impostati su valori predefiniti 
+            specifici all'avvio e supportare determinate numeri di controller come per il pedale sustain e numeri 
+            di parametri registrati (RPN).</p>
+        
+        <p>Una versione semplificata di GM, chiamata GM Lite, è utilizzata per dispositivi con potenza di elaborazione 
+            limitata.</p>
+        </div>
+
+        <!DOCTYPE html>
+        <html lang="it">
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Tastiera Musicale Interattiva</title>
+            <style>
+                body {
+                    font-family: Arial, sans-serif;
+                    display: flex;
+                    flex-direction: column;
+                    align-items: justify;
+                    background-color: #000000;
+                    padding: 20px;
+                }
+                
+                h1 {
+                    color: #ffffff;
+                    margin-bottom: 30px;
+                }
+                
+                .keyboard {
+                    display: flex;
+                    position: relative;
+                    margin-bottom: 30px;
+                    height: 200px;
+                }
+                
+                .white-key {
+                    width: 50px;
+                    height: 200px;
+                    background-color: rgb(0, 0, 0);
+                    border: 1px solid #ccc;
+                    border-radius: 0 0 5px 5px;
+                    cursor: pointer;
+                    display: flex;
+                    justify-content: center;
+                    align-items: flex-end;
+                    padding-bottom: 10px;
+                    box-sizing: border-box;
+                    user-select: none;
+                    z-index: 1;
+                    position: relative;
+                }
+                
+                .white-key.active {
+                    background-color: #e0e0e0;
+                }
+                
+                .black-key {
+                    width: 30px;
+                    height: 120px;
+                    background-color: rgb(255, 255, 255);
+                    border-radius: 0 0 5px 5px;
+                    position: absolute;
+                    cursor: pointer;
+                    z-index: 2;
+                    color: white;
+                    display: flex;
+                    justify-content: center;
+                    align-items: flex-end;
+                    padding-bottom: 10px;
+                    box-sizing: border-box;
+                    user-select: none;
+                }
+                
+                .black-key.active {
+                    background-color: #333;
+                }
+                
+                .info-panel {
+                    width: 80%;
+                    max-width: 600px;
+                    background-color: rgb(0, 0, 0);
+                    border-radius: 8px;
+                    padding: 20px;
+                    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+                }
+                
+                .info-title {
+                    font-size: 1.2em;
+                    margin-bottom: 15px;
+                    color: #444;
+                }
+                
+                .info-content {
+                    font-family: monospace;
+                    background-color: #000000;
+                    padding: 15px;
+                    border-radius: 5px;
+                    min-height: 100px;
+                }
+                
+                .note-name {
+                    font-size: 1.5em;
+                    font-weight: bold;
+                    margin-bottom: 10px;
+                }
+                
+                .midi-params {
+                    display: grid;
+                    grid-template-columns: 1fr 1fr;
+                    gap: 10px;
+                }
+                
+                .param {
+                    display: flex;
+                    justify-content: space-between;
+                }
+                
+                .param-name {
+                    font-weight: bold;
+                }
+            </style>
+        </head>
+        <body>
+            <h1>Tastiera Musicale Interattiva (2 Ottave Complete)</h1>
+            
+            <div class="keyboard" id="keyboard">
+                <!-- I tasti verranno generati dinamicamente con JavaScript -->
+            </div>
+            
+            <div class="info-panel">
+                <div class="info-title">Informazioni MIDI</div>
+                <div class="info-content" id="midi-info">
+                    <div class="note-name">Clicca un tasto per vedere i parametri MIDI</div>
+                    <div class="midi-params">
+                        <div class="param"><span class="param-name">Nota:</span> <span id="note">-</span></div>
+                        <div class="param"><span class="param-name">Numero MIDI:</span> <span id="midi-number">-</span></div>
+                        <div class="param"><span class="param-name">Frequenza (Hz):</span> <span id="frequency">-</span></div>
+                        <div class="param"><span class="param-name">Ottava:</span> <span id="octave">-</span></div>
+                        <div class="param"><span class="param-name">Velocity:</span> <span id="velocity">-</span></div>
+                        <div class="param"><span class="param-name">Channel:</span> <span id="channel">-</span></div>
+                    </div>
+                </div>
+            </div>
+            
+            <script>
+                document.addEventListener('DOMContentLoaded', function() {
+                    const keyboard = document.getElementById('keyboard');
+                    const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                    let oscillators = {};
+                    
+                    // Note della scala cromatica
+                    const notes = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
+                    
+                    // Creazione della tastiera (2 ottave complete, da C3 a B4)
+                    const startOctave = 3;
+                    const endOctave = 4;
+                    
+                    // Creiamo prima tutti i tasti bianchi e teniamo traccia della loro posizione
+                    let whiteKeys = [];
+                    let whiteKeyCount = 0;
+                    
+                    for (let octave = startOctave; octave <= endOctave; octave++) {
+                        for (let i = 0; i < 12; i++) {
+                            // Saltiamo i tasti neri (li aggiungeremo dopo)
+                            if (['C#', 'D#', 'F#', 'G#', 'A#'].includes(notes[i])) continue;
+                            
+                            const noteName = notes[i];
+                            const midiNumber = 12 * (octave + 1) + i;
+                            const frequency = 440 * Math.pow(2, (midiNumber - 69) / 12);
+                            
+                            const whiteKey = document.createElement('div');
+                            whiteKey.className = 'white-key';
+                            whiteKey.textContent = noteName + octave;
+                            whiteKey.dataset.note = noteName;
+                            whiteKey.dataset.octave = octave;
+                            whiteKey.dataset.midi = midiNumber;
+                            whiteKey.dataset.frequency = frequency.toFixed(2);
+                            whiteKey.dataset.position = whiteKeyCount;
+                            
+                            whiteKey.addEventListener('mousedown', () => playNote(whiteKey, 127));
+                            whiteKey.addEventListener('mouseup', () => stopNote(whiteKey));
+                            whiteKey.addEventListener('mouseleave', () => stopNote(whiteKey));
+                            
+                            keyboard.appendChild(whiteKey);
+                            whiteKeys.push({ 
+                                note: noteName, 
+                                octave: octave, 
+                                element: whiteKey,
+                                position: whiteKeyCount
+                            });
+                            
+                            whiteKeyCount++;
+                        }
+                    }
+                    
+                    // Ora aggiungiamo i tasti neri nella posizione corretta
+                    const blackKeyPositions = [
+                        { note: 'C#', whiteBefore: 'C', offset: 0.7 },
+                        { note: 'D#', whiteBefore: 'D', offset: 0.7 },
+                        { note: 'F#', whiteBefore: 'F', offset: 0.7 },
+                        { note: 'G#', whiteBefore: 'G', offset: 0.7 },
+                        { note: 'A#', whiteBefore: 'A', offset: 0.7 }
+                    ];
+                    
+                    for (let octave = startOctave; octave <= endOctave; octave++) {
+                        for (let blackKey of blackKeyPositions) {
+                            const noteName = blackKey.note;
+                            const i = notes.indexOf(noteName);
+                            const midiNumber = 12 * (octave + 1) + i;
+                            const frequency = 440 * Math.pow(2, (midiNumber - 69) / 12);
+                            
+                            const blackKeyElement = document.createElement('div');
+                            blackKeyElement.className = 'black-key';
+                            blackKeyElement.textContent = noteName + octave;
+                            blackKeyElement.dataset.note = noteName;
+                            blackKeyElement.dataset.octave = octave;
+                            blackKeyElement.dataset.midi = midiNumber;
+                            blackKeyElement.dataset.frequency = frequency.toFixed(2);
+                            
+                            // Troviamo il tasto bianco che precede questo tasto nero
+                            const whiteBefore = whiteKeys.find(k => 
+                                k.note === blackKey.whiteBefore && k.octave === octave
+                            );
+                            
+                            if (whiteBefore) {
+                                const position = (whiteBefore.position * 50) + (blackKey.offset * 50);
+                                blackKeyElement.style.left = `${position}px`;
+                            }
+                            
+                            blackKeyElement.addEventListener('mousedown', () => playNote(blackKeyElement, 127));
+                            blackKeyElement.addEventListener('mouseup', () => stopNote(blackKeyElement));
+                            blackKeyElement.addEventListener('mouseleave', () => stopNote(blackKeyElement));
+                            
+                            keyboard.appendChild(blackKeyElement);
+                        }
+                    }
+                    
+                    // Funzione per suonare una nota
+                    function playNote(keyElement, velocity) {
+                        const midiNumber = parseInt(keyElement.dataset.midi);
+                        const frequency = parseFloat(keyElement.dataset.frequency);
+                        const noteName = keyElement.dataset.note;
+                        const octave = keyElement.dataset.octave;
+                        
+                        // Aggiorna il pannello delle informazioni
+                        document.getElementById('note').textContent = noteName + octave;
+                        document.getElementById('midi-number').textContent = midiNumber;
+                        document.getElementById('frequency').textContent = frequency + ' Hz';
+                        document.getElementById('octave').textContent = octave;
+                        document.getElementById('velocity').textContent = velocity;
+                        document.getElementById('channel').textContent = 1; // Canale MIDI 1
+                        
+                        // Evidenzia il tasto premuto
+                        keyElement.classList.add('active');
+                        
+                        // Crea e avvia l'oscillatore
+                        const oscillator = audioContext.createOscillator();
+                        const gainNode = audioContext.createGain();
+                        
+                        oscillator.type = 'sine';
+                        oscillator.frequency.value = frequency;
+                        
+                        gainNode.gain.value = velocity / 127;
+                        
+                        oscillator.connect(gainNode);
+                        gainNode.connect(audioContext.destination);
+                        
+                        oscillator.start();
+                        
+                        oscillators[midiNumber] = { oscillator, gainNode };
+                    }
+                    
+                    // Funzione per fermare una nota
+                    function stopNote(keyElement) {
+                        const midiNumber = parseInt(keyElement.dataset.midi);
+                        
+                        // Rimuovi l'evidenziazione
+                        keyElement.classList.remove('active');
+                        
+                        // Ferma l'oscillatore se esiste
+                        if (oscillators[midiNumber]) {
+                            oscillators[midiNumber].gainNode.gain.setValueAtTime(
+                                oscillators[midiNumber].gainNode.gain.value,
+                                audioContext.currentTime
+                            );
+                            oscillators[midiNumber].gainNode.gain.exponentialRampToValueAtTime(
+                                0.001,
+                                audioContext.currentTime + 0.03
+                            );
+                            
+                            oscillators[midiNumber].oscillator.stop(audioContext.currentTime + 0.03);
+                            delete oscillators[midiNumber];
+                        }
+                    }
+                    
+                    // Aggiungi supporto per la tastiera del computer
+                    document.addEventListener('keydown', function(e) {
+                        // Mappatura dei tasti della tastiera alle note (stile piano roll)
+                        const keyMap = {
+                            'a': 'C3', 'w': 'C#3', 's': 'D3', 'e': 'D#3', 'd': 'E3',
+                            'f': 'F3', 't': 'F#3', 'g': 'G3', 'y': 'G#3', 'h': 'A3',
+                            'u': 'A#3', 'j': 'B3', 'k': 'C4', 'o': 'C#4', 'l': 'D4',
+                            'p': 'D#4', ';': 'E4', "'": 'F4', ']': 'F#4', '\\': 'G4',
+                            '[': 'G#4', 'Enter': 'A4', 'Shift': 'A#4', 'z': 'B4'
+                        };
+                        
+                        if (keyMap[e.key]) {
+                            const note = keyMap[e.key];
+                            const keyElement = document.querySelector(`[data-note="${note.substring(0, note.length-1)}"][data-octave="${note.substring(note.length-1)}"]`);
+                            if (keyElement && !keyElement.classList.contains('active')) {
+                                playNote(keyElement, 100);
+                            }
+                        }
+                    });
+                    
+                    document.addEventListener('keyup', function(e) {
+                        const keyMap = {
+                            'a': 'C3', 'w': 'C#3', 's': 'D3', 'e': 'D#3', 'd': 'E3',
+                            'f': 'F3', 't': 'F#3', 'g': 'G3', 'y': 'G#3', 'h': 'A3',
+                            'u': 'A#3', 'j': 'B3', 'k': 'C4', 'o': 'C#4', 'l': 'D4',
+                            'p': 'D#4', ';': 'E4', "'": 'F4', ']': 'F#4', '\\': 'G4',
+                            '[': 'G#4', 'Enter': 'A4', 'Shift': 'A#4', 'z': 'B4'
+                        };
+                        
+                        if (keyMap[e.key]) {
+                            const note = keyMap[e.key];
+                            const keyElement = document.querySelector(`[data-note="${note.substring(0, note.length-1)}"][data-octave="${note.substring(note.length-1)}"]`);
+                            if (keyElement) {
+                                stopNote(keyElement);
+                            }
+                        }
+                    });
+                });
+            </script>
+        </body>
+        </html>
+    
+
+    <section id="references">
+        <h2>Webgrafia:</h2>
+        <ul>
+            <li><a href="https://www.suonoelettronico.com/interfacciamidi.html" target="_blank">https://www.suonoelettronico.com/interfacciamidi.html</a></li>
+            <li><a href="https://www.thomann.de/it/onlineexpert_page_tastiere_il_midi.html" target="_blank">https://www.thomann.de/it/onlineexpert_page_tastiere_il_midi.html</a></li>
+            <li><a href="https://www.muzines.co.uk/articles/talking-midi/1274" target="_blank">https://www.muzines.co.uk/articles/talking-midi/1274</a></li>
+        </ul>
+    </section>
+</body>
+</html>
