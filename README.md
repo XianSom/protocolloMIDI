@@ -32,13 +32,8 @@ Webgrafia:
 [Suonoelettronico](https://www.suonoelettronico.com/interfacciamidi.html)
 
 
-
-
-https://user-images.githubusercontent.com/6561331/236182302-68a6bd12-7b83-4d19-b83e-c9b7db795881.mp4
-
-
 ## Design dell’interfaccia e modalità di interazione
-Per la reaqlizzazione delle interazioni mi sono concentrato su tre elementi principali: un riproduttore audio, una serie di pulsanti per ripodurre brevi suoni percussivi appartenenti allo standard MIDI, ed una tastiera musicale interattiva.
+Per la realizzazione delle interazioni mi sono concentrato su tre elementi principali: un riproduttore audio, una serie di pulsanti per ripodurre brevi suoni percussivi appartenenti allo standard MIDI, ed una tastiera musicale interattiva il cui suono è generato da degli oscillatori sinusoidali.
 
 
 Per il primo ho creato e inserito un pulsante per avviare la riproduzione di un file precaricato proprio nella parte iniziale della pagine. 
@@ -47,16 +42,12 @@ Con questa modalità di interazione si avrà una apertura del suono man mano che
 A questo elemento è stato aggunto anche un piccolo display che permette di visualizzare la traccia audio seguendo il metodo delle figure di Lissajous.
 Questo viene visualizzato sul lato destro della pagina e rimane in posizione fissa quando si scrolla la pagina verso il basso in modo da poterlo vede durante la consultazione del sito. 
 
-[<img src="doc/Drum.png" width="500" alt="DRUMMACHINE">]()
-[<img src="doc/cards.gif" width="500" alt="Magic trick">]()
-
+[<img src="doc/Lissajous.png" width="500" alt="Lissajous display">]()
 
 
 Per il secondo elemento ho ricreato un set di 28 campioni audio relativi alle percussioni utilizzate nel protocollo MIDI e li ho mappati con dei pulsanti interattivi che riprducono il singolo file di ogni specifico strumento percussivo. I pulsanti indicano il nome dello strumento e il relativo numero nella codifica MIDI.
 
-[<img src="doc/Drum.png" width="500" alt="DRUMMACHINE">]()
-
-
+[<img src="doc/Drum.png" width="500" alt="DrumMachine">]()
 
 
 Per il terzo elemento ho ricreato 3 ottave della tastiera di un pianoforte il cui suono generato ha una forma d'onda sinusoidale. 
@@ -66,7 +57,7 @@ Il punto forte dell'elemento tastiera interattiva è un display che permette di 
 
 Un'ulteriore tipo di interazione è data dalla possibilità di ascoltare in sottofondo la traccia audio e poter suonare contermporaneamente la tastiera interattiva proprio come se fosse uno strumento musicale con cui creare musica sovrapponendo più sorgenti sonore. 
 
-[<img src="doc/Keyboard.png" width="500" alt="KEYBOARD">]()
+[<img src="doc/Keyboard.png" width="500" alt="Keyboard">]()
 
 
 ## Tecnologia usata
@@ -132,4 +123,3 @@ Il contenuto di questa pagine è per quelle persone che sono curiose, che hanno 
 
 
 
-[<img src="doc/munari.jpg" width="300" alt="Supplemento al dizionario italiano">]()

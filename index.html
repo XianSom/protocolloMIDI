@@ -291,7 +291,7 @@
         .info-midi {
             font-family: monospace;
             background-color: #1a1a1a; /* Grigio scuro */
-            padding: 15px; */
+            padding: 15px;
             border-radius: 0px;
             border: 1px solid #444;
             min-height: 100px;
@@ -373,11 +373,11 @@
             class="midi-logo"
             loading="lazy"
             style="margin-left: 0; margin-bottom: 0;"
-            >
+            >      
 
             <!-- BUTTON PLAYER -->
 
-            <audio id="audio-player" src="Audio/SixTrak.mp3" preload="auto" loop></audio>
+            <audio id="audio-player" src="Audio/Alva_Sounds.wav" preload="auto" loop></audio>
             <button id="play-audio" style="background-color: black; border: none; padding: 10px; cursor: pointer; margin: 10px 0">
                 <svg id="play-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="white" viewBox="0 0 24 24">
                     <path d="M8 5v14l11-7z"/>
@@ -1223,7 +1223,7 @@
             oscillator.type = 'sine';
             oscillator.frequency.value = frequency;
             
-            gainNode.gain.value = velocity / 500;
+            gainNode.gain.value = velocity / 2000;
             
             oscillator.connect(gainNode);
             gainNode.connect(analyser);
