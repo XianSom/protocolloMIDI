@@ -47,14 +47,14 @@ Con questa modalità di interazione si avrà una apertura del suono man mano che
 A questo elemento è stato aggunto anche un piccolo display che permette di visualizzare la traccia audio seguendo il metodo delle figure di Lissajous.
 Questo viene visualizzato sul lato destro della pagina e rimane in posizione fissa quando si scrolla la pagina verso il basso in modo da poterlo vede durante la consultazione del sito. 
 
-[<img src="Drum.png" width="500" alt="DRUMMACHINE">](doc/Drum.png)
-
+[<img src="doc/Drum.png" width="500" alt="DRUMMACHINE">]()
+[<img src="doc/cards.gif" width="500" alt="Magic trick">]()
 
 
 
 Per il secondo elemento ho ricreato un set di 28 campioni audio relativi alle percussioni utilizzate nel protocollo MIDI e li ho mappati con dei pulsanti interattivi che riprducono il singolo file di ogni specifico strumento percussivo. I pulsanti indicano il nome dello strumento e il relativo numero nella codifica MIDI.
 
-[<img src="Drum.png" width="500" alt="DRUMMACHINE">]()
+[<img src="doc/Drum.png" width="500" alt="DRUMMACHINE">]()
 
 
 
@@ -66,7 +66,7 @@ Il punto forte dell'elemento tastiera interattiva è un display che permette di 
 
 Un'ulteriore tipo di interazione è data dalla possibilità di ascoltare in sottofondo la traccia audio e poter suonare contermporaneamente la tastiera interattiva proprio come se fosse uno strumento musicale con cui creare musica sovrapponendo più sorgenti sonore. 
 
-[<img src="Keyboard.png" width="500" alt="KEYBOARD">]()
+[<img src="doc/Keyboard.png" width="500" alt="KEYBOARD">]()
 
 
 ## Tecnologia usata
