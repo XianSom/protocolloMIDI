@@ -47,7 +47,7 @@ Con questa modalità di interazione si avrà una apertura del suono man mano che
 A questo elemento è stato aggunto anche un piccolo display che permette di visualizzare la traccia audio seguendo il metodo delle figure di Lissajous.
 Questo viene visualizzato sul lato destro della pagina e rimane in posizione fissa quando si scrolla la pagina verso il basso in modo da poterlo vede durante la consultazione del sito. 
 
-[<img src="Drum.png" width="500" alt="DRUMMACHINE">]()
+[<img src="Drum.png" width="500" alt="DRUMMACHINE">](doc/Drum.png)
 
 
 
